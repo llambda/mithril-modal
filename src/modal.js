@@ -1,23 +1,24 @@
-var m = require('mithril');
-var visible = m.prop(false);
-var style = require('./style');
-var assignStyles = require('assign-styles');
-var Prefixer = require('inline-style-prefixer');
-// var customUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
-var prefixer = new Prefixer();
+import m from 'mithril'; // let m = require('mithril');
+import style from './style';
+import assignStyles from 'assign-styles';
+import Prefixer from 'inline-style-prefixer';
+// let customUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
+let prefixer = new Prefixer();
+let visible = m.prop(false);
 
-module.exports.show = function() {
+export function show() {
     visible(true);
 }
 
-var hide = function() {
+export function hide() {
     visible(false);
 }
-module.exports.hide = hide;
 
-module.exports.controller = function(args, extras) {
-    var ctrl = this;
-    var origColor = style.base.color;
+debugger
+
+export function controller(args, extras) {
+    let ctrl = this;
+    let origColor = style.base.color;
 
     ctrl.onunload = function() {
         document.body.removeEventListener('keyup', handleKey)
@@ -25,7 +26,7 @@ module.exports.controller = function(args, extras) {
 
     ctrl.config = function(element, isInitialized, context) {
         if (!isInitialized) {
-            var handleKey = function(e) {
+            let handleKey = function(e) {
                 if (e.keyCode == 27) {
                     visible(false);
                     m.redraw()
@@ -37,7 +38,7 @@ module.exports.controller = function(args, extras) {
     }
 }
 
-module.exports.view = function(ctrl, args, extras) {
+export function view(ctrl, args, extras) {
     args = args || {}
     args.style = args.style || {}
 

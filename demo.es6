@@ -1,5 +1,5 @@
-var m = require('mithril');
-var modal = require('./modal/modal.js');
+import m from 'mithril';
+import modal from './lib/modal';
 
 // top level
 var demo = {

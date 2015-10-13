@@ -2,11 +2,14 @@
   "name": "mithril-modal",
   "version": "1.0.0",
   "description": "modal dialog for mithril.js",
-  "main": "modal/modal.js",
+  "main": "lib/modal.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack demo.js --output-file bundle.js",
-    "watch": "webpack -w demo.js --output-file bundle.js"
+    "build": "webpack",
+    "watch": "webpack -w",
+    "compile": "babel -d lib/ src/",
+    "compilewatch": "babel --watch -d lib/ src/",
+    "prepublish": "npm run compile && npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,6 +27,8 @@
     "mithril": "^0.2.0"
   },
   "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
     "webpack": "^1.12.2"
   }
 }

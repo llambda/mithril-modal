@@ -1,7 +1,5 @@
 'use strict';
-var styles = {};
-
-styles.base = {
+export const base = {
     position: 'fixed',
     top: '50%',
     left: '50%',
@@ -11,16 +9,16 @@ styles.base = {
     transform: 'translateX(-50%) translateY(-50%)'
 }
 
-styles.hidden = {
+export const hidden = {
     visibility: 'hidden'
 }
 
-styles.visible = {
+export const visible = {
     visibility: 'visible',
     backfaceVisibility: 'visible'
 }
 
-styles.close = {
+export const close = {
     cursor: 'pointer',
     color: 'inherit',
     fontSize: '1.6em',
@@ -31,23 +29,20 @@ styles.close = {
     top: '5px'
 }
 
-styles.dialog = {
+export const dialog = {
     position: 'relative',
     background: 'silver',
     minHeight: '400px',
     padding: '10px',
     width: '400px'
 }
-
-styles.overlay = {
+export const overlay = {
     position: 'fixed',
     width: '100%',
     height: '100%',
     visibility: 'hidden',
     top: '0',
     left: '0',
-    zIndex: styles.base['zIndex'] - 1,
+    zIndex: base.zIndex - 1,
     opacity: '0'
 }
-
-module.exports = styles;
