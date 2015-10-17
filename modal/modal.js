@@ -2,9 +2,6 @@ var m = require('mithril');
 var visible = m.prop(false);
 var style = require('./style');
 var assignStyles = require('assign-styles');
-var Prefixer = require('inline-style-prefixer');
-// var customUserAgent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.93 Safari/537.36'
-var prefixer = new Prefixer();
 
 module.exports.show = function() {
     visible(true);
@@ -39,20 +36,16 @@ module.exports.controller = function(args, extras) {
 
 module.exports.view = function(ctrl, args, extras) {
     args = args || {}
-    args.style = args.style || {}
 
-    return m('div', [
+    var vdom = m('div', [
         m(".modal", {
-            class: [
-                visible() ? "modal-visible" : "",
-                args.class
-            ].join(" "),
+            class: visible() ? "modal-visible" : "",
             onclick: hide,
             config: ctrl.config,
-            style: prefixer.prefix(assignStyles(style.base, visible() ? style.visible : style.hidden))
+            style: assignStyles(visible() ? style.visible : style.hidden, style.base)
         }, [
             m(".modal-dialog", {
-                style: prefixer.prefix(assignStyles(style.dialog, args.style.dialog)),
+                style: style.dialog
             }, [
                 m("a", {
                     onclick: hide,
@@ -62,13 +55,19 @@ module.exports.view = function(ctrl, args, extras) {
                     onmouseout: function() {
                         this.style.color = 'black'
                     },
-                    style: prefixer.prefix(assignStyles(style.close, args.style.close))
+                    style: style.close
                 }, args.close ? args.close : '×'),
                 args.innerComponent ? args.innerComponent : ''
             ])
         ]),
         m(".modal-overlay", {
-            style: prefixer.prefix(assignStyles(style.overlay, args.style.overlay))
+            style: style.overlay
         })
     ])
+
+    if (args.transformer) {
+        return args.transformer(vdom);
+    } else {
+        return vdom;
+    }
 }

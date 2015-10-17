@@ -1,5 +1,29 @@
 var m = require('mithril');
 var modal = require('./modal/modal.js');
+var assignStyles = require('assign-styles');
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var styler = function (root) {
+    var r = getRandomInt(1,16);
+    console.log('animation #' + r);
+
+    var main = root.children[0];
+    var second = root.children[1];
+    main.attrs.class = main.attrs.class + " modal-animation-" + getRandomInt(1,16);
+
+    if (main.attrs.class.indexOf('modal-visible') > -1) {
+        // modal visible
+        main.attrs.style = assignStyles(main.attrs.style, {
+            backgroundColor: '#aaffee',
+            width: '700px'
+        })
+    }
+
+    return root;
+}
 
 // top level
 var demo = {
@@ -11,17 +35,8 @@ var demo = {
                 }
             }, "Click to show modal"),
             m.component(modal, {
-                // component to render inside the modal:
                 innerComponent: m.component(inner),
-                // animation class:
-                class: 'modal-animation-8',
-                // styles can be overridden as well
-                style: {
-                    dialog: {
-                        backgroundColor: '#aaffee',
-                        width: '700px'
-                    }
-                },
+                transformer: styler,
                 // the close string can be suplied:
                 close: '✘',
                 // close: '×',

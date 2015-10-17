@@ -1,5 +1,7 @@
 'use strict';
 var styles = {};
+var Prefixer = require('inline-style-prefixer');
+var prefixer = new Prefixer();
 
 styles.base = {
     position: 'fixed',
@@ -49,5 +51,9 @@ styles.overlay = {
     zIndex: styles.base['zIndex'] - 1,
     opacity: '0'
 }
+
+Object.keys(styles).forEach(function (key) {
+    styles[key] = prefixer.prefix(styles[key]);
+})
 
 module.exports = styles;
